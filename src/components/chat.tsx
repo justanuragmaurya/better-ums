@@ -97,18 +97,17 @@ function Chat({ chatroom, title, userData }: ChatProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center px-6 py-4 border-b bg-white">
+      <div className="flex items-center px-6 py-4 border-b bg-background">
         <h1 className="text-2xl">
           {title}: <span className="font-bold">{chatroom}</span>
         </h1>
       </div>
       
-      {/* Rest of the JSX remains the same */}
       <div className="relative flex-1">
         <div className="absolute inset-0 bottom-[4.5rem]">
           <div 
             ref={chatContainerRef} 
-            className="h-full overflow-y-auto"
+            className="h-full overflow-y-auto bg-background"
             onScroll={handleScroll}
           >
             <div className="flex flex-col justify-end min-h-full px-6 py-4">
@@ -120,12 +119,12 @@ function Chat({ chatroom, title, userData }: ChatProps) {
                       key={index} 
                       className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}
                     >
-                      <span className="text-xs text-gray-500 mb-1">{e.name}</span>
+                      <span className="text-xs text-muted-foreground mb-1">{e.name}</span>
                       <div 
                         className={`max-w-[80%] px-4 py-2 rounded-2xl break-words ${
                           isCurrentUser 
                             ? 'bg-blue-500 text-white rounded-tr-none' 
-                            : 'bg-gray-200 rounded-tl-none'
+                            : 'bg-secondary text-secondary-foreground rounded-tl-none'
                         }`}
                       >
                         {e.message}
@@ -138,7 +137,7 @@ function Chat({ chatroom, title, userData }: ChatProps) {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 border-t bg-white">
+        <div className="absolute bottom-0 left-0 right-0 border-t bg-background">
           <div className="flex gap-2 max-w-4xl mx-auto px-6 py-4">
             <Input 
               ref={messageRef}

@@ -56,7 +56,7 @@ export function LoginForm({
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter your UMS's registeration number and your password.
+            Enter your UMS registeration number and your password.
           </CardDescription>
         </CardHeader>
         <CardContent>

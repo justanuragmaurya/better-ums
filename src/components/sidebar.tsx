@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Bell, MessageCircle, Menu, Users, Info, Home, LayoutDashboard, PersonStanding, Icon, LogIn, LogInIcon } from 'lucide-react'
+import { Bell, MessageCircle,  Users,  Home, LayoutDashboard, LogInIcon } from 'lucide-react'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
 import Link from 'next/link'
 
@@ -16,13 +16,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarProvider,
   SidebarRail,
-  SidebarTrigger,
 } from '@/components/ui/sidebar'
-import { Avatar } from '@radix-ui/react-avatar'
-import { AvatarFallback } from './ui/avatar'
-import { Button } from './ui/button'
+
 
 export function SiteSidebar() {
   // Get the current active segment to highlight the active menu item
@@ -40,7 +36,7 @@ export function SiteSidebar() {
         if(window.localStorage.getItem("cookie")){
             setAuth(true)
         }
-    })
+    },[])
   return (
     <Sidebar>
       <SidebarHeader>
@@ -125,7 +121,7 @@ export function SiteSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <div className="px-4 py-2 text-xs text-muted-foreground">
-          © 2025 Better UMS        
+          Made with ❤️ by Anurag Maurya
         </div>
       </SidebarFooter>
       <SidebarRail />
