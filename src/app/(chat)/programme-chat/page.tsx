@@ -1,20 +1,21 @@
 "use client"
 import { Student } from '@/lib/types';
 import React, { useEffect, useState } from 'react'
+import Chat from "@/components/chat";
 
 function ProgrammeChat() {
   const [data,setData] = useState<Student|null>(null)
-  const [chats,setChat]=useState("");
 
   useEffect(()=>{
-    setData(JSON.parse(localStorage.getItem("student_details")!))
+    const studentData = localStorage.getItem("student_details");
+    if (studentData) {
+      setData(JSON.parse(studentData));
+    }
   },[])
 
-  return (
-    <div>
-      <h1 className='text-2xl'>Programme: <span className='font-bold'> {data?.program}</span></h1>
-    </div>
-  )
+  if (!data?.program) return null;
+
+  return <Chat chatroom={data.program} title="Programme" userData={data} />;
 }
 
 export default ProgrammeChat
