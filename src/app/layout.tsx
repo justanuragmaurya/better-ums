@@ -34,7 +34,7 @@ export default function RootLayout({
               <SidebarTrigger />
               <div className="font-semibold">Better<span className="bg-gradient-to-r from-orange-400 to-orange-500 text-transparent bg-clip-text">UMS</span></div>
             </header>
-            <main className="p-6">
+            <main className="flex-1 h-[calc(100vh-4rem)] overflow-hidden">
               {children}
               <Toaster />
             </main>
