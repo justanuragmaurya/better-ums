@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Bell, MessageCircle,  Users,  Home, LayoutDashboard, LogInIcon } from 'lucide-react'
+import { Bell, MessageCircle,  Users,  Home, LayoutDashboard, LogInIcon, Medal } from 'lucide-react'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
 import Link from 'next/link'
 
@@ -65,6 +65,14 @@ export function SiteSidebar() {
                   <Link href="/announcements">
                     <Bell className="mr-2 h-4 w-4" />
                     <span>Announcements</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={segment === 'ranking'}>
+                  <Link href="/rankings">
+                    <Medal className="mr-2 h-4 w-4" />
+                    <span>Rankings</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
