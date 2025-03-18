@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Student } from "@/lib/types";
+import { ChatMessage } from "@/lib/types"; // Import the new type
 import { Send } from "lucide-react";
 import React, { useEffect, useState, useRef } from "react";
 
@@ -14,9 +15,35 @@ interface ChatProps {
 function Chat({ chatroom, title, userData }: ChatProps) {
   const [socket, setWs] = useState<WebSocket | null>(null);
   const messageRef = useRef<HTMLInputElement|null>(null);
-  const [chats, setChat] = useState<any[]>([]);
+  const [chats, setChat] = useState<ChatMessage[]>([]);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Fetch initial chat history
+  useEffect(() => {
+    if (!chatroom) return;
+    
+    const fetchChatHistory = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/chat-history?chatroom=${encodeURIComponent(chatroom.toLowerCase())}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch chat history');
+        }
+        
+        const data = await response.json();
+        setChat(data.messages || []);
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchChatHistory();
+  }, [chatroom]);
 
   const sendMessage = () => {
     if(!messageRef.current?.value || !userData) {
@@ -111,28 +138,38 @@ function Chat({ chatroom, title, userData }: ChatProps) {
             onScroll={handleScroll}
           >
             <div className="flex flex-col justify-end min-h-full px-6 py-4">
-              <div className="space-y-4">
-                {chats.map((e, index) => {
-                  const isCurrentUser = parseInt(e.reg_no) === parseInt(userData?.registration_number || "0");
-                  return (
-                    <div 
-                      key={index} 
-                      className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}
-                    >
-                      <span className="text-xs text-muted-foreground mb-1">{e.name}</span>
+              {isLoading ? (
+                <div className="flex justify-center items-center h-20">
+                  <p className="text-muted-foreground">Loading messages...</p>
+                </div>
+              ) : chats.length === 0 ? (
+                <div className="flex justify-center items-center h-20">
+                  <p className="text-muted-foreground">No messages yet. Start the conversation!</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {chats.map((e, index) => {
+                    const isCurrentUser = parseInt(e.reg_no) === parseInt(userData?.registration_number || "0");
+                    return (
                       <div 
-                        className={`max-w-[80%] px-4 py-2 rounded-2xl break-words ${
-                          isCurrentUser 
-                            ? 'bg-blue-500 text-white rounded-tr-none' 
-                            : 'bg-secondary text-secondary-foreground rounded-tl-none'
-                        }`}
+                        key={index} 
+                        className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}
                       >
-                        {e.message}
+                        <span className="text-xs text-muted-foreground mb-1">{e.name}</span>
+                        <div 
+                          className={`max-w-[80%] px-4 py-2 rounded-2xl break-words ${
+                            isCurrentUser 
+                              ? 'bg-blue-500 text-white rounded-tr-none' 
+                              : 'bg-secondary text-secondary-foreground rounded-tl-none'
+                          }`}
+                        >
+                          {e.message}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
