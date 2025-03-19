@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { AttendanceData, Student } from "@/lib/types";
 import { AlertTriangle, BookOpen, Calendar, Clock, Loader2, Percent, Award, Info } from "lucide-react";
 import axios from "axios";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 function Attendance() {
   const [sdata, setSdata] = useState<Student | null>(null);
@@ -13,7 +15,7 @@ function Attendance() {
 
   const getAttendance = async () => {
     setLoading(true);
-    if (!sdata || !password || !cookie) {
+    if (!sdata || !password || !cookie){
       return;
     }
     const response = await axios.post("/api/get-attendance", {
@@ -82,9 +84,16 @@ function Attendance() {
 
   return (
     <div className="p-4 md:p-6 border rounded-md shadow-sm">
-      <div className="flex items-center gap-2 mb-4">
-        <BookOpen className="h-5 w-5 text-orange-400" />
-        <h1 className="text-2xl font-black">Attendance</h1>
+      <div className="flex items-center justify-between gap-2 mb-4">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-5 w-5 text-orange-400" />
+          <h1 className="text-2xl font-black">Attendance</h1>
+        </div>
+        <div>
+          <Link href={"/timetable"}>
+          <Button className="shadow">View Timetable</Button>
+          </Link>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -57,8 +57,8 @@ export default function DetailBanner() {
   };
 
   return (
-      <div className="rounded-lg shadow-md md:p-6 border ">
-        <div className="flex flex-col md:flex-row gap-6">
+      <div className="rounded-lg shadow-md md:p-6 border">
+        <div className="flex flex-col md:flex-row gap-6 p-4 md:p-6">
           {/* Profile Image Section */}
           <div className="flex justify-center md:justify-start">
             <img 

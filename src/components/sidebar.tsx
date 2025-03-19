@@ -76,6 +76,14 @@ export function SiteSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={segment === 'ranking'}>
+                  <Link href="/timetable">
+                    <Medal className="mr-2 h-4 w-4" />
+                    <span>Time Table</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

@@ -70,3 +70,40 @@ export interface ExamSchedule {
   exams: Exam[];
   cookie: string;
 }
+
+export interface TimeTable {
+  [day: string]: {
+    [time: string]: string;
+  };
+}
+
+export interface Legends {
+  C: string;
+  F: string;
+  G: string;
+  R: string;
+  S: string;
+}
+
+export interface FacultyDetails {
+  [courseCode: string]: {
+    course_title: string;
+    lectures: string;
+    tutorials: string;
+    practical: string;
+    credits: string;
+    faculty_name: string;
+    cabin: string;
+    last_updated: string;
+  };
+}
+
+export interface Data {
+  time_table: TimeTable;
+  legends: Legends;
+  section: string;
+  last_updated: string;
+  registration_number: string;
+  faculty_details: FacultyDetails;
+  cookie: string;
+}
