@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Bell, MessageCircle,  Users,  Home, LayoutDashboard, LogInIcon, Medal } from 'lucide-react'
+import { Bell, MessageCircle,  Users,  Home, LayoutDashboard, LogInIcon, Medal, Table } from 'lucide-react'
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation'
 import Link from 'next/link'
 
@@ -27,8 +27,11 @@ export function SiteSidebar() {
     const router = useRouter()
 
     const handleLogut = ()=>{
-        localStorage.setItem("cookie","")
-        localStorage.setItem("student_details","");
+      console.log("logged out") 
+        window.localStorage.setItem("cookie","")
+        window.localStorage.setItem("reg_no","")
+        window.localStorage.setItem("pass","")
+        window.localStorage.setItem("student_details","");
         setAuth(false)
         router.push("/")
     }
@@ -79,7 +82,7 @@ export function SiteSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={segment === 'ranking'}>
                   <Link href="/timetable">
-                    <Medal className="mr-2 h-4 w-4" />
+                    <Table className="mr-2 h-4 w-4"/>
                     <span>Time Table</span>
                   </Link>
                 </SidebarMenuButton>
@@ -127,7 +130,7 @@ export function SiteSidebar() {
                 <SidebarMenuButton asChild isActive={segment === 'detail' || segment === null}>
                   <Link href="/login">
                   <LogInIcon/>
-                  <div>{isAuthenticated?<div onClick={handleLogut}>Logout</div>:<div onClick={()=>{router.push("/login")}}>Login</div>}</div>
+                  <div>{isAuthenticated?<div onClick={handleLogut}>Logout</div>:<div onClick={()=>{router.push("/login"); setAuth(true)}}>Login</div>}</div>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
